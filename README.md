@@ -1,2 +1,2 @@
 # edison
-An audiobook client
+:headphones::books: An audiobook app for self hosted audiobooks
