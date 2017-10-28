@@ -58,9 +58,6 @@ class Root extends Component {
       },
       Library: {
         screen: Library,
-        navigationOptions: {
-          headerTitle: 'Library',
-        },
       },
     }, {
       initialRouteName: libraries ? 'Libraries' : 'AddLibrary',
