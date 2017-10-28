@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { AsyncStorage } from 'react-native';
 import AddLibraryPresentational from '../components/AddLibrary';
 import { KEY_LIBRARIES } from '../constants/globals';
@@ -44,6 +45,8 @@ class AddLibrary extends Component {
       } else {
         await AsyncStorage.setItem(KEY_LIBRARIES, JSON.stringify([edisonConfig]));
       }
+
+      this.props.onSubmit();
     } catch (error) {
       console.error(error);
       this.setState({ error: error.message });
@@ -65,5 +68,9 @@ class AddLibrary extends Component {
     );
   }
 }
+
+AddLibrary.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default AddLibrary;

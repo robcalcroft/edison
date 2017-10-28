@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Text } from 'react-native';
+import { AsyncStorage, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Libraries from './screens/Libraries';
 import AddLibrary from './screens/AddLibrary';
@@ -34,7 +34,12 @@ class Root extends Component {
     const { libraries } = this.state;
 
     if (libraries === null) {
-      return <Text>Loading...</Text>;
+      // TODO Turn into loading component
+      return (
+        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+          <Text>Loading...</Text>
+        </View>
+      );
     }
 
     const NavigationStack = StackNavigator({
@@ -43,6 +48,9 @@ class Root extends Component {
       },
       Libraries: {
         screen: Libraries,
+        navigationOptions: {
+          headerTitle: 'Libraries',
+        },
       },
     }, {
       initialRouteName: libraries ? 'Libraries' : 'AddLibrary',
