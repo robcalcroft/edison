@@ -4,9 +4,9 @@ import { StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 5,
-    marginLeft: 5,
-    marginRight: 5,
+    flex: 1,
+    paddingLeft: 5,
+    paddingRight: 5,
   },
 });
 
@@ -15,7 +15,7 @@ const Container = ({ children }) => (
 );
 
 Container.propTypes = {
-  children: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  children: PropTypes.node.isRequired,
 };
 
 export default Container;

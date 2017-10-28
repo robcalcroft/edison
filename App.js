@@ -3,6 +3,7 @@ import { AsyncStorage, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Libraries from './screens/Libraries';
 import AddLibrary from './screens/AddLibrary';
+import Library from './screens/Library';
 import { KEY_LIBRARIES } from './constants/globals';
 
 class Root extends Component {
@@ -53,6 +54,12 @@ class Root extends Component {
         screen: Libraries,
         navigationOptions: {
           headerTitle: 'Libraries',
+        },
+      },
+      Library: {
+        screen: Library,
+        navigationOptions: {
+          headerTitle: 'Library',
         },
       },
     }, {

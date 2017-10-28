@@ -5,7 +5,6 @@ import moment from 'moment';
 
 const styles = StyleSheet.create({
   audiobook: {
-    marginTop: 20,
     borderWidth: 3,
     borderColor: 'gray',
   },
@@ -15,22 +14,29 @@ const styles = StyleSheet.create({
   },
 });
 
-const Audiobook = ({ audiobook }) => (
-  <View key={audiobook.uid} style={styles.audiobook}>
-    <Text>{audiobook.name} by {audiobook.author}</Text>
-    <Text>{audiobook.files.length} track(s)</Text>
-    <Text>Added {moment.unix(audiobook.dateAdded).fromNow()}</Text>
-    <Image style={styles.audioook__image} source={{ uri: audiobook.artwork }} />
+const Audiobook = ({
+  uid,
+  name,
+  author,
+  artwork,
+  dateAdded,
+  files,
+}) => (
+  <View key={uid} style={styles.audiobook}>
+    <Text>{name} by {author}</Text>
+    <Text>{files.length} track(s)</Text>
+    <Text>Added {moment.unix(dateAdded).fromNow()}</Text>
+    <Image style={styles.audioook__image} source={{ uri: artwork }} />
   </View>
 );
 
 Audiobook.propTypes = {
-  audiobook: PropTypes.shape({
-    uid: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    dateAdded: PropTypes.string.isRequired,
-  }).isRequired,
+  uid: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  artwork: PropTypes.string.isRequired,
+  dateAdded: PropTypes.string.isRequired,
+  files: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Audiobook;

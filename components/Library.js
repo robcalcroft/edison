@@ -1,7 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View } from 'react-native';
-import Audiobook from './Audiobook';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
+import Title from './Title';
+import Subtitle from './Subtitle';
+// import Audiobook from './Audiobook';
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 5,
+    backgroundColor: 'white',
+  },
+  spacedRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+});
 
 const Library = ({
   uid,
@@ -9,13 +24,29 @@ const Library = ({
   owner,
   edisonVersion,
   library,
+  onPress,
 }) => (
-  <View key={uid}>
-    <Text>{libraryName}</Text>
-    <Text>Owned by {owner}</Text>
-    <Text>Made for Edison v{edisonVersion}</Text>
-    {library.map(audiobook => <Audiobook key={audiobook.uid} audiobook={audiobook} />)}
-  </View>
+  <TouchableHighlight
+    onPress={() => onPress({
+      uid,
+      libraryName,
+      owner,
+      edisonVersion,
+      library,
+    })}
+  >
+    <View style={styles.container}>
+      <View style={styles.spacedRow}>
+        <Title>{libraryName}</Title>
+        <Title>{library.length} audiobooks</Title>
+      </View>
+      <View style={styles.spacedRow}>
+        <Subtitle>By {owner}</Subtitle>
+        <Subtitle>Supports v{edisonVersion}</Subtitle>
+        <Subtitle>{uid}</Subtitle>
+      </View>
+    </View>
+  </TouchableHighlight>
 );
 
 Library.propTypes = {
@@ -24,6 +55,7 @@ Library.propTypes = {
   owner: PropTypes.string.isRequired,
   edisonVersion: PropTypes.string.isRequired,
   library: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default Library;
