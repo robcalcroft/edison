@@ -37,16 +37,18 @@ class AddLibrary extends Component {
       }
 
       const librariesRaw = await AsyncStorage.getItem(KEY_LIBRARIES);
+      let libraries = [];
 
       if (librariesRaw && Array.isArray(JSON.parse(librariesRaw))) {
-        const libraries = JSON.parse(librariesRaw);
+        libraries = JSON.parse(librariesRaw);
         libraries.push(edisonConfig);
         await AsyncStorage.setItem(KEY_LIBRARIES, JSON.stringify(libraries));
       } else {
-        await AsyncStorage.setItem(KEY_LIBRARIES, JSON.stringify([edisonConfig]));
+        libraries = [edisonConfig];
+        await AsyncStorage.setItem(KEY_LIBRARIES, JSON.stringify(libraries));
       }
 
-      this.props.onSubmit();
+      this.props.onSubmit({ libraries });
     } catch (error) {
       console.error(error);
       this.setState({ error: error.message });

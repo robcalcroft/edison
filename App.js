@@ -45,6 +45,9 @@ class Root extends Component {
     const NavigationStack = StackNavigator({
       AddLibrary: {
         screen: AddLibrary,
+        navigationOptions: {
+          headerTitle: 'Add Library',
+        },
       },
       Libraries: {
         screen: Libraries,

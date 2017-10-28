@@ -17,7 +17,7 @@ const AddLibrary = ({
   libraryUrl,
   error,
 }) => (
-  <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+  <View>
     <Text>Add a library URL</Text>
     {error ? <Text>{error}</Text> : null}
     <TextInput
