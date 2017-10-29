@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import moment from 'moment';
 
 const styles = StyleSheet.create({
@@ -15,28 +15,36 @@ const styles = StyleSheet.create({
 });
 
 const Audiobook = ({
-  uid,
   name,
   author,
   artwork,
   dateAdded,
   files,
+  onPress,
 }) => (
-  <View key={uid} style={styles.audiobook}>
-    <Text>{name} by {author}</Text>
-    <Text>{files.length} track(s)</Text>
-    <Text>Added {moment.unix(dateAdded).fromNow()}</Text>
-    <Image style={styles.audioook__image} source={{ uri: artwork }} />
-  </View>
+  <TouchableHighlight
+    onPress={() => onPress({
+      name,
+      author,
+      files,
+    })}
+  >
+    <View style={styles.audiobook}>
+      <Text>{name} by {author}</Text>
+      <Text>{files.length} track(s)</Text>
+      <Text>Added {moment.unix(dateAdded).fromNow()}</Text>
+      <Image style={styles.audioook__image} source={{ uri: artwork }} />
+    </View>
+  </TouchableHighlight>
 );
 
 Audiobook.propTypes = {
-  uid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   artwork: PropTypes.string.isRequired,
   dateAdded: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default Audiobook;

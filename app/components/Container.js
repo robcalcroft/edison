@@ -5,8 +5,8 @@ import { StyleSheet, View } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingLeft: 5,
-    paddingRight: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 });
 

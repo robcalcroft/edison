@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import Title from './Title';
+import Header from './Header';
 import Subtitle from './Subtitle';
 // import Audiobook from './Audiobook';
 
@@ -36,14 +37,10 @@ const Library = ({
     })}
   >
     <View style={styles.container}>
-      <View style={styles.spacedRow}>
-        <Title>{libraryName}</Title>
-        <Title>{library.length} audiobooks</Title>
-      </View>
+      <Title>{libraryName}</Title>
+      <Header>{library.length} audiobook{library.length === 1 ? '' : 's'}</Header>
       <View style={styles.spacedRow}>
         <Subtitle>By {owner}</Subtitle>
-        <Subtitle>Supports v{edisonVersion}</Subtitle>
-        <Subtitle>{uid}</Subtitle>
       </View>
     </View>
   </TouchableHighlight>

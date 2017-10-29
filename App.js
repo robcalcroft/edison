@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import Libraries from './screens/Libraries';
-import AddLibrary from './screens/AddLibrary';
-import Library from './screens/Library';
-import { KEY_LIBRARIES } from './constants/globals';
+import Libraries from './app/screens/Libraries';
+import AddLibrary from './app/screens/AddLibrary';
+import Library from './app/screens/Library';
+import { KEY_LIBRARIES } from './app/constants/globals';
 
 class Root extends Component {
   constructor() {

@@ -1,23 +1,31 @@
 {
-  "name": "edison",
-  "version": "1.0.0",
-  "description": "An audiobook client for self hosted audiobooks",
-  "author": null,
-  "private": true,
-  "main": "node_modules/expo/AppEntry.js",
-  "dependencies": {
-    "expo": "^22.0.0",
-    "moment": "^2.19.1",
-    "prop-types": "^15.6.0",
-    "react": "16.0.0-beta.5",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.1.tar.gz",
-    "react-navigation": "^1.0.0-beta.15"
-  },
-  "devDependencies": {
-    "eslint": "^4.9.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0"
-  }
+	"name": "edison",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"test": "jest",
+    "lint": "eslint App.js app/"
+	},
+	"dependencies": {
+		"moment": "^2.19.1",
+		"prop-types": "^15.6.0",
+		"react": "16.0.0-beta.5",
+		"react-native": "0.49.5",
+		"react-navigation": "^1.0.0-beta.15"
+	},
+	"devDependencies": {
+		"babel-jest": "21.2.0",
+		"babel-preset-react-native": "4.0.0",
+		"eslint": "^4.10.0",
+		"eslint-config-airbnb": "^16.1.0",
+		"eslint-plugin-import": "^2.8.0",
+		"eslint-plugin-jsx-a11y": "^6.0.2",
+		"eslint-plugin-react": "^7.4.0",
+		"jest": "21.2.1",
+		"react-test-renderer": "16.0.0-beta.5"
+	},
+	"jest": {
+		"preset": "react-native"
+	}
 }

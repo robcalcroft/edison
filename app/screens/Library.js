@@ -10,10 +10,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const Library = ({ navigation: { state: { params: { library } } } }) => (
+const Library = ({ navigation, navigation: { state: { params: { library } } } }) => (
   <ScrollView style={styles.container}>
     <Container>
-      {library.map(audiobook => <Audiobook key={audiobook.uid} {...audiobook} />)}
+      {library.map(audiobook => (
+        <Audiobook
+          key={audiobook.uid}
+          onPress={audiobookToPlay => navigation.navigate('NowPlaying', audiobookToPlay)}
+          {...audiobook}
+        />
+      ))}
     </Container>
   </ScrollView>
 );
