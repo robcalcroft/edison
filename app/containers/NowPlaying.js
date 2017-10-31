@@ -24,6 +24,9 @@ class NowPlaying extends Component {
             currentTime,
             seekableDuration,
           })}
+          onLoad={() => console.log('fully loaded')}
+          onLoadStart={() => alert('begin loading')}
+          onBuffer={buffer => alert(JSON.stringify(buffer))}
           key={4}
           source={{ uri: activePathOrUri }}
           paused={paused}

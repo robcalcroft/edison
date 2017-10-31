@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import {
   Button,
   Image,
@@ -9,6 +10,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import Slider from 'react-native-slider';
 
 const styles = StyleSheet.create({
   nowPlayingBar: {
@@ -34,14 +36,32 @@ const styles = StyleSheet.create({
   },
   nowPlayingModal: {
     marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'space-around',
     flex: 1,
   },
   nowPlayingImage: {
-    height: 425,
-    width: 275,
+    flex: 0.85,
+    width: '100%',
+  },
+  nowPlayingSliderContainer: {
+    width: '100%',
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  nowPlayingSliderInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  nowPlayingActions: {
+    flexDirection: 'row',
+  },
+  nowPlayingInfo: {
+    fontSize: 22,
   },
 });
-
+// TODO convert to normal class to allow no updating of the value of the slider until the
+// onSlidingComplete has been called
 const NowPlaying = ({
   modalVisible,
   showModal,
@@ -49,11 +69,14 @@ const NowPlaying = ({
   activePathOrUri,
   paused,
   muted,
-  volume,
   title,
   author,
   artwork,
   setNowPlayingState,
+  seekableDuration,
+  currentTime,
+  performPlayerAction,
+  showNativePlayer,
 }) => [
   activePathOrUri ? (
     <TouchableHighlight key={1} onPress={showModal}>
@@ -78,17 +101,41 @@ const NowPlaying = ({
     key={2}
   >
     <View style={styles.nowPlayingModal}>
-      <Image source={{ uri: artwork }} style={styles.nowPlayingImage} />
-      <Text>{title} by {author}</Text>
-      <Text>Volume {volume}</Text>
-      <Text>{muted ? 'Muted' : 'Not Muted'}</Text>
+      <Image resizeMode="contain" source={{ uri: artwork }} style={styles.nowPlayingImage} />
+      <Text style={styles.nowPlayingInfo}>{title} by {author}</Text>
+      <View style={styles.nowPlayingSliderContainer}>
+        <Slider
+          value={currentTime}
+          maximumValue={seekableDuration}
+          onSlidingComplete={value => performPlayerAction('seek', value)}
+          style={styles.nowPlayingSlider}
+        />
+        <View style={styles.nowPlayingSliderInfo}>
+          <Text>{moment(moment.duration(currentTime, 's').asMilliseconds()).format('HH:mm:ss')}</Text>
+          <Text>-{moment(moment.duration(seekableDuration - currentTime, 's').asMilliseconds()).format('HH:mm:ss')}</Text>
+        </View>
+      </View>
       {/* We are not using this as you can use the phone's volume control */}
       {/* <Slider onValueChange={value => setNowPlayingState({ volume: value })} /> */}
-      <Button onPress={hideModal} title="Close" />
-      <Button
-        onPress={() => setNowPlayingState({ paused: !paused })}
-        title={paused ? 'Play' : 'Pause'}
-      />
+      <View style={styles.nowPlayingActions}>
+        <Button onPress={hideModal} title="Close" />
+        <Button
+          onPress={() => setNowPlayingState({ muted: !muted })}
+          title={muted ? 'Unmute' : 'Mute'}
+        />
+        <Button
+          onPress={() => setNowPlayingState({ paused: !paused })}
+          title={paused ? 'Play' : 'Pause'}
+        />
+        <Button
+          onPress={() => performPlayerAction('seek', 0)}
+          title="Restart"
+        />
+        <Button
+          onPress={() => showNativePlayer()}
+          title="Fullscreen"
+        />
+      </View>
     </View>
   </Modal>,
 ];
