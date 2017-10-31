@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import NavigationStack from './app/containers/NavigationStack';
 import Splash from './app/components/Splash';
-import NowPlaying from './app/components/NowPlaying';
+import NowPlaying from './app/containers/NowPlaying';
 
 class Root extends Component {
   constructor() {
@@ -10,11 +10,23 @@ class Root extends Component {
 
     this.setStack = this.setStack.bind(this);
     this.setNowPlayingState = this.setNowPlayingState.bind(this);
+    this.setPlayerRef = this.setPlayerRef.bind(this);
+    this.performPlayerAction = this.performPlayerAction.bind(this);
 
     this.state = {
       stack: null,
       nowPlaying: {
         modalVisible: false,
+        paused: true,
+        muted: false,
+        volume: 1,
+        activePathOrUri: '',
+        queuedPathsOrUris: [],
+        title: '',
+        author: '',
+        artwork: '',
+        currentTime: 0,
+        seekableDuration: 0,
       },
     };
   }
@@ -38,6 +50,14 @@ class Root extends Component {
     });
   }
 
+  setPlayerRef(ref) {
+    this.player = ref;
+  }
+
+  performPlayerAction(action, params) {
+    this.player[action](params);
+  }
+
   render() {
     const { stack: NavStack, nowPlaying } = this.state;
 
@@ -50,11 +70,14 @@ class Root extends Component {
         <NavStack
           screenProps={{
             setNowPlayingState: this.setNowPlayingState,
-            nowPlayingState: this.state.nowPlaying,
+            nowPlayingState: nowPlaying,
           }}
         />
         <NowPlaying
           {...nowPlaying}
+          setNowPlayingState={this.setNowPlayingState}
+          setPlayerRef={this.setPlayerRef}
+          performPlayerAction={this.performPlayerAction}
           hideModal={() => this.setNowPlayingState({ modalVisible: false })}
           showModal={() => this.setNowPlayingState({ modalVisible: true })}
         />

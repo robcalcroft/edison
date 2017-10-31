@@ -26,6 +26,7 @@ const Audiobook = ({
     onPress={() => onPress({
       name,
       author,
+      artwork,
       files,
     })}
   >

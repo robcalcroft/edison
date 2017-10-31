@@ -10,13 +10,20 @@ const styles = StyleSheet.create({
   },
 });
 
-const Library = ({ navigation, navigation: { state: { params: { library } } } }) => (
+const Library = ({ screenProps, navigation: { state: { params: { library } } } }) => (
   <ScrollView style={styles.container}>
     <Container>
       {library.map(audiobook => (
         <Audiobook
           key={audiobook.uid}
-          onPress={audiobookToPlay => navigation.navigate('NowPlaying', audiobookToPlay)}
+          onPress={audiobookToPlay => screenProps.setNowPlayingState({
+            title: audiobookToPlay.name,
+            author: audiobookToPlay.author,
+            artwork: audiobookToPlay.artwork,
+            activePathOrUri: audiobookToPlay.files[0],
+            queuedPathsOrUris: audiobookToPlay.files.slice(1),
+            paused: false,
+          })}
           {...audiobook}
         />
       ))}
@@ -35,6 +42,10 @@ Library.propTypes = {
         library: PropTypes.array.isRequired,
       }),
     }),
+  }).isRequired,
+  screenProps: PropTypes.shape({
+    setNowPlayingState: PropTypes.func.isRequired,
+    nowPlayingState: PropTypes.object.isRequired,
   }).isRequired,
 };
 
