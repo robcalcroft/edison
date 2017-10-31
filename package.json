@@ -5,7 +5,7 @@
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest",
-    "lint": "eslint App.js app/"
+		"lint": "eslint App.js app/"
 	},
 	"dependencies": {
 		"moment": "^2.19.1",

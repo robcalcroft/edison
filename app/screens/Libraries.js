@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AsyncStorage, Button } from 'react-native';
 import Container from '../components/Container';
-import LibrariesContainer from '../components/Libraries';
+import LibrariesContainer from '../containers/Libraries';
 
 const clearLibraries = () => {
   AsyncStorage.clear().then(() => alert('Cleared, now you can restart the app'));
 };
 
-const Libraries = ({ navigation, navigation: { state: { params } } }) => (
+const Libraries = ({ navigation }) => (
   <Container>
-    <LibrariesContainer {...params} onPress={library => navigation.navigate('Library', library)} />
+    <LibrariesContainer onPress={library => navigation.navigate('Library', library)} />
   </Container>
 );
 
@@ -20,11 +20,7 @@ Libraries.navigationOptions = ({ navigation }) => ({
 });
 
 Libraries.propTypes = {
-  navigation: PropTypes.shape({
-    state: PropTypes.shape({
-      params: PropTypes.object,
-    }),
-  }).isRequired,
+  navigation: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default Libraries;
