@@ -12,7 +12,6 @@ class Root extends Component {
     this.setNowPlayingState = this.setNowPlayingState.bind(this);
     this.setPlayerRef = this.setPlayerRef.bind(this);
     this.performPlayerAction = this.performPlayerAction.bind(this);
-    this.showNativePlayer = this.showNativePlayer.bind(this);
 
     this.state = {
       stack: null,
@@ -55,14 +54,9 @@ class Root extends Component {
     this.player = ref;
   }
 
-  performPlayerAction(action, params) {
+  performPlayerAction(action, params, callback = () => {}) {
     this.player[action](params);
-  }
-
-  showNativePlayer() {
-    this.setNowPlayingState({ modalVisible: false }, () => {
-      this.player.presentFullscreenPlayer();
-    });
+    callback();
   }
 
   render() {
@@ -85,7 +79,6 @@ class Root extends Component {
           setNowPlayingState={this.setNowPlayingState}
           setPlayerRef={this.setPlayerRef}
           performPlayerAction={this.performPlayerAction}
-          showNativePlayer={this.showNativePlayer}
           hideModal={() => this.setNowPlayingState({ modalVisible: false })}
           showModal={() => this.setNowPlayingState({ modalVisible: true })}
         />
