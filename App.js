@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { AsyncStorage, View } from 'react-native';
 import NavigationStack from './app/containers/NavigationStack';
 import Splash from './app/components/Splash';
 import NowPlaying from './app/containers/NowPlaying';
+import { TIME_PREFIX } from './app/constants/globals';
 
 class Root extends Component {
   constructor() {
@@ -27,6 +28,7 @@ class Root extends Component {
         artwork: '',
         currentTime: 0,
         seekableDuration: 0,
+        uid: null,
       },
     };
   }
@@ -42,6 +44,10 @@ class Root extends Component {
   }
 
   setNowPlayingState(newState, callback = () => {}) {
+    if (newState.currentTime !== this.state.nowPlaying.currentTime) {
+      this.saveCurrentTimeToStorage(newState.currentTime, this.state.nowPlaying.uid);
+    }
+
     this.setState({
       nowPlaying: {
         ...this.state.nowPlaying,
@@ -52,6 +58,10 @@ class Root extends Component {
 
   setPlayerRef(ref) {
     this.player = ref;
+  }
+
+  saveCurrentTimeToStorage(time, uid) { // eslint-disable-line class-methods-use-this
+    AsyncStorage.setItem(`${TIME_PREFIX}${uid}`, time).catch(error => console.error(error));
   }
 
   performPlayerAction(action, params, callback = () => {}) {

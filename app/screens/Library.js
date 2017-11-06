@@ -23,6 +23,7 @@ const Library = ({ screenProps, navigation: { state: { params: { library } } } }
             activePathOrUri: audiobookToPlay.files[0],
             queuedPathsOrUris: audiobookToPlay.files.slice(1),
             paused: false,
+            uid: audiobookToPlay.uid,
           })}
           {...audiobook}
         />

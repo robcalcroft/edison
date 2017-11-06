@@ -10,7 +10,19 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import Slider from 'react-native-slider';
+
+const TouchableIcon = ({ name, onPress }) => (
+  <TouchableHighlight onPress={onPress} underlayColor="transparent" activeOpacity={0.5}>
+    <Icon name={name} size={38} />
+  </TouchableHighlight>
+);
+
+TouchableIcon.propTypes = {
+  name: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+};
 
 const styles = StyleSheet.create({
   nowPlayingBar: {
@@ -54,6 +66,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   nowPlayingActions: {
+    width: '100%',
+    justifyContent: 'space-around',
     flexDirection: 'row',
   },
   nowPlayingInfo: {
@@ -130,22 +144,22 @@ class NowPlaying extends Component {
           {/* We are not using this as you can use the phone's volume control */}
           {/* <Slider onValueChange={value => setNowPlayingState({ volume: value })} /> */}
           <View style={styles.nowPlayingActions}>
-            <Button onPress={hideModal} title="Close" />
-            <Button
+            <TouchableIcon
+              name={muted ? 'volume' : 'volume-2'}
               onPress={() => setNowPlayingState({ muted: !muted })}
-              title={muted ? 'Unmute' : 'Mute'}
             />
-            <Button
-              onPress={() => setNowPlayingState({ paused: !paused })}
-              title={paused ? 'Play' : 'Pause'}
-            />
-            <Button
+            <TouchableIcon
+              name="skip-back"
               onPress={() => performPlayerAction('seek', 0)}
-              title="Restart"
             />
-            <Button
+            <TouchableIcon
+              name={`${paused ? 'play' : 'pause'}-circle`}
+              onPress={() => setNowPlayingState({ paused: !paused })}
+            />
+            <TouchableIcon name="minimize" onPress={hideModal} />
+            <TouchableIcon
+              name="maximize-2"
               onPress={() => this.showNativePlayer()}
-              title="Fullscreen"
             />
           </View>
         </View>

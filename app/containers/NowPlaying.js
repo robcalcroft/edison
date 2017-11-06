@@ -20,6 +20,7 @@ class NowPlaying extends Component {
       activePathOrUri ? (
         <Audio
           ref={ref => setPlayerRef(ref)}
+          progressUpdateInterval={1000}
           onProgress={({ currentTime, seekableDuration }) => setNowPlayingState({
             currentTime,
             seekableDuration,

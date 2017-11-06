@@ -20,6 +20,7 @@ const Audiobook = ({
   artwork,
   dateAdded,
   files,
+  uid,
   onPress,
 }) => (
   <TouchableHighlight
@@ -28,6 +29,7 @@ const Audiobook = ({
       author,
       artwork,
       files,
+      uid,
     })}
   >
     <View style={styles.audiobook}>
@@ -45,6 +47,7 @@ Audiobook.propTypes = {
   artwork: PropTypes.string.isRequired,
   dateAdded: PropTypes.string.isRequired,
   files: PropTypes.arrayOf(PropTypes.string).isRequired,
+  uid: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
 };
 
