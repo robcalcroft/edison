@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, StatusBar } from 'react-native';
 import AddLibraryPresentational from '../components/AddLibrary';
 import { KEY_LIBRARIES } from '../constants/globals';
 
@@ -28,6 +28,7 @@ class AddLibrary extends Component {
       return this.setState({ error: 'No library URL provided' });
     }
 
+    StatusBar.setNetworkActivityIndicatorVisible(true);
     try {
       const response = await fetch(libraryUrl);
       const edisonConfig = await response.json();
@@ -48,7 +49,8 @@ class AddLibrary extends Component {
         await AsyncStorage.setItem(KEY_LIBRARIES, JSON.stringify(libraries));
       }
 
-      this.props.onSubmit({ libraries });
+      StatusBar.setNetworkActivityIndicatorVisible(false);
+      this.props.onSubmit();
     } catch (error) {
       console.error(error);
       this.setState({ error: error.message });

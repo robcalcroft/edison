@@ -7,13 +7,12 @@ import AddLibraryContainer from '../containers/AddLibrary';
 const AddLibrary = ({ navigation }) => (
   <Container>
     <AddLibraryContainer
-      onSubmit={(props = {}, screenName = 'Libraries') => {
+      onSubmit={(screenName = 'Libraries') => {
         const resetAction = NavigationActions.reset({
           index: 0,
           actions: [
             NavigationActions.navigate({
               routeName: screenName,
-              params: props,
             }),
           ],
         });
