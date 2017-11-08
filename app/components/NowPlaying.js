@@ -10,19 +10,8 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import Slider from 'react-native-slider';
-
-const TouchableIcon = ({ name, onPress }) => (
-  <TouchableHighlight onPress={onPress} underlayColor="transparent" activeOpacity={0.5}>
-    <Icon name={name} size={38} />
-  </TouchableHighlight>
-);
-
-TouchableIcon.propTypes = {
-  name: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired,
-};
+import TouchableIcon from './TouchableIcon';
 
 const styles = StyleSheet.create({
   nowPlayingBar: {

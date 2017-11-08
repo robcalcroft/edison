@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { AsyncStorage } from 'react-native';
 import Audio from 'react-native-video';
 import NowPlayingPresentational from '../components/NowPlaying';
+import { TIME_PREFIX } from '../constants/globals';
 
 class NowPlaying extends Component {
   render() {
@@ -9,9 +11,11 @@ class NowPlaying extends Component {
       paused,
       muted,
       volume,
+      uid,
       activePathOrUri,
       setPlayerRef,
       setNowPlayingState,
+      performPlayerAction,
     } = this.props;
 
     return [
@@ -25,7 +29,9 @@ class NowPlaying extends Component {
             currentTime,
             seekableDuration,
           })}
-          onLoad={() => console.log('fully loaded')}
+          onLoad={() => AsyncStorage.getItem(`${TIME_PREFIX}${uid}`).then(time => (
+            performPlayerAction('seek', Number(time))
+          ))}
           onLoadStart={() => console.log('begin loading')}
           onBuffer={buffer => console.log(JSON.stringify(buffer))}
           key={4}
@@ -47,9 +53,11 @@ NowPlaying.propTypes = {
   paused: PropTypes.bool.isRequired,
   muted: PropTypes.bool.isRequired,
   volume: PropTypes.number.isRequired,
+  uid: PropTypes.string.isRequired,
   activePathOrUri: PropTypes.string.isRequired,
   setPlayerRef: PropTypes.func.isRequired,
   setNowPlayingState: PropTypes.func.isRequired,
+  performPlayerAction: PropTypes.func.isRequired,
 };
 
 export default NowPlaying;

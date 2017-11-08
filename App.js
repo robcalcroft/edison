@@ -28,7 +28,7 @@ class Root extends Component {
         artwork: '',
         currentTime: 0,
         seekableDuration: 0,
-        uid: null,
+        uid: '0',
       },
     };
   }
@@ -61,7 +61,7 @@ class Root extends Component {
   }
 
   saveCurrentTimeToStorage(time, uid) { // eslint-disable-line class-methods-use-this
-    AsyncStorage.setItem(`${TIME_PREFIX}${uid}`, time).catch(error => console.error(error));
+    AsyncStorage.setItem(`${TIME_PREFIX}${uid}`, String(time)).catch(error => console.error(error));
   }
 
   performPlayerAction(action, params, callback = () => {}) {
