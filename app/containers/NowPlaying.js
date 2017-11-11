@@ -13,6 +13,7 @@ class NowPlaying extends Component {
       volume,
       uid,
       activePathOrUri,
+      queuedPathsOrUris,
       setPlayerRef,
       setNowPlayingState,
       performPlayerAction,
@@ -32,6 +33,18 @@ class NowPlaying extends Component {
           onLoad={() => AsyncStorage.getItem(`${TIME_PREFIX}${uid}`).then(time => (
             performPlayerAction('seek', Number(time))
           ))}
+          onEnd={() => {
+            if (queuedPathsOrUris.length > 0) {
+              setNowPlayingState({
+                activePathOrUri: queuedPathsOrUris[0],
+                queuedPathsOrUris: queuedPathsOrUris.slice(1),
+              });
+            } else {
+              setNowPlayingState({
+                paused: true,
+              });
+            }
+          }}
           onLoadStart={() => console.log('begin loading')}
           onBuffer={buffer => console.log(JSON.stringify(buffer))}
           key={4}
@@ -55,6 +68,7 @@ NowPlaying.propTypes = {
   volume: PropTypes.number.isRequired,
   uid: PropTypes.string.isRequired,
   activePathOrUri: PropTypes.string.isRequired,
+  queuedPathsOrUris: PropTypes.arrayOf(PropTypes.string).isRequired,
   setPlayerRef: PropTypes.func.isRequired,
   setNowPlayingState: PropTypes.func.isRequired,
   performPlayerAction: PropTypes.func.isRequired,
