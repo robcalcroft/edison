@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { AsyncStorage } from 'react-native';
 import Audio from 'react-native-video';
 import NowPlayingPresentational from '../components/NowPlaying';
-import { TIME_PREFIX } from '../constants/globals';
+import { KEY_TIME_PREFIX, KEY_TRACK_PREFIX } from '../constants/globals';
 
 class NowPlaying extends Component {
   render() {
@@ -29,11 +29,17 @@ class NowPlaying extends Component {
           onProgress={({ currentTime, seekableDuration }) => setNowPlayingState({
             currentTime,
             seekableDuration,
+            activePathOrUri,
           })}
-          onLoad={() => AsyncStorage.getItem(`${TIME_PREFIX}${uid}`).then(time => (
-            performPlayerAction('seek', Number(time))
-          ))}
-          onEnd={() => {
+          onLoad={() => {
+            AsyncStorage.getItem(`${KEY_TIME_PREFIX}${uid}`).then(time => (
+              performPlayerAction('seek', Number(time))
+            ));
+            AsyncStorage.setItem(`${KEY_TRACK_PREFIX}${uid}`, String(activePathOrUri));
+          }}
+          onEnd={async () => {
+            AsyncStorage.multiRemove([`${KEY_TIME_PREFIX}${uid}`, `${KEY_TRACK_PREFIX}${uid}`]);
+
             if (queuedPathsOrUris.length > 0) {
               setNowPlayingState({
                 activePathOrUri: queuedPathsOrUris[0],

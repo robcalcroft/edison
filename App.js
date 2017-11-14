@@ -3,7 +3,7 @@ import { AsyncStorage, View } from 'react-native';
 import NavigationStack from './app/containers/NavigationStack';
 import Splash from './app/components/Splash';
 import NowPlaying from './app/containers/NowPlaying';
-import { TIME_PREFIX } from './app/constants/globals';
+import { KEY_TIME_PREFIX, KEY_TRACK_PREFIX } from './app/constants/globals';
 
 class Root extends Component {
   constructor() {
@@ -48,6 +48,10 @@ class Root extends Component {
       this.saveCurrentTimeToStorage(newState.currentTime, this.state.nowPlaying.uid);
     }
 
+    if (newState.activePathOrUri !== this.state.nowPlaying.activePathOrUri) {
+      this.saveCurrentTrackToStorage(newState.activePathOrUri, this.state.nowPlaying.uid);
+    }
+
     this.setState({
       nowPlaying: {
         ...this.state.nowPlaying,
@@ -61,7 +65,11 @@ class Root extends Component {
   }
 
   saveCurrentTimeToStorage(time, uid) { // eslint-disable-line class-methods-use-this
-    AsyncStorage.setItem(`${TIME_PREFIX}${uid}`, String(time)).catch(error => console.error(error));
+    AsyncStorage.setItem(`${KEY_TIME_PREFIX}${uid}`, String(time)).catch(error => console.error(error));
+  }
+
+  saveCurrentTrackToStorage(track, uid) { // eslint-disable-line class-methods-use-this
+    AsyncStorage.setItem(`${KEY_TRACK_PREFIX}${uid}`, String(track)).catch(error => console.error(error));
   }
 
   performPlayerAction(action, params, callback = () => {}) {

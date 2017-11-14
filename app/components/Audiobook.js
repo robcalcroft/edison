@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { AsyncStorage, Image, StyleSheet, TouchableHighlight, View } from 'react-native';
 import moment from 'moment';
+import Text from './Text';
+import { KEY_TRACK_PREFIX } from '../constants/globals';
 
 const styles = StyleSheet.create({
   audiobook: {
-    borderWidth: 3,
-    borderColor: 'gray',
+    backgroundColor: 'white',
+    padding: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  audiobook__info: {
+    paddingLeft: 10,
   },
   audioook__image: {
     width: 50,
@@ -24,19 +31,32 @@ const Audiobook = ({
   onPress,
 }) => (
   <TouchableHighlight
-    onPress={() => onPress({
-      name,
-      author,
-      artwork,
-      files,
-      uid,
-    })}
+    onPress={() => {
+      AsyncStorage.getItem(`${KEY_TRACK_PREFIX}${uid}`).then((track) => {
+        const params = {
+          name,
+          author,
+          artwork,
+          files,
+          uid,
+        };
+
+        console.log(track, files);
+        if (track && files.indexOf(track) > 0) {
+          params.files = files.slice(files.indexOf(track));
+        }
+
+        onPress(params);
+      });
+    }}
   >
     <View style={styles.audiobook}>
-      <Text>{name} by {author}</Text>
-      <Text>{files.length} track(s)</Text>
-      <Text>Added {moment.unix(dateAdded).fromNow()}</Text>
       <Image style={styles.audioook__image} source={{ uri: artwork }} />
+      <View style={styles.audiobook__info}>
+        <Text>{name} by {author}</Text>
+        <Text>{files.length} track(s)</Text>
+        <Text>Added {moment.unix(dateAdded).fromNow()}</Text>
+      </View>
     </View>
   </TouchableHighlight>
 );

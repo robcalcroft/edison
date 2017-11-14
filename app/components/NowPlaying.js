@@ -6,11 +6,11 @@ import {
   Image,
   Modal,
   StyleSheet,
-  Text,
   TouchableHighlight,
   View,
 } from 'react-native';
 import Slider from 'react-native-slider';
+import Text from './Text';
 import TouchableIcon from './TouchableIcon';
 
 const styles = StyleSheet.create({
@@ -134,20 +134,20 @@ class NowPlaying extends Component {
           {/* <Slider onValueChange={value => setNowPlayingState({ volume: value })} /> */}
           <View style={styles.nowPlayingActions}>
             <TouchableIcon
-              name={muted ? 'volume' : 'volume-2'}
+              name={muted ? 'ios-volume-off' : 'ios-volume-up'}
               onPress={() => setNowPlayingState({ muted: !muted })}
             />
             <TouchableIcon
-              name="skip-back"
+              name="ios-skip-backward"
               onPress={() => performPlayerAction('seek', 0)}
             />
             <TouchableIcon
-              name={`${paused ? 'play' : 'pause'}-circle`}
+              name={`ios-${paused ? 'play' : 'pause'}`}
               onPress={() => setNowPlayingState({ paused: !paused })}
             />
-            <TouchableIcon name="minimize" onPress={hideModal} />
+            <TouchableIcon name="ios-contract" onPress={hideModal} />
             <TouchableIcon
-              name="maximize-2"
+              name="ios-expand"
               onPress={() => this.showNativePlayer()}
             />
           </View>

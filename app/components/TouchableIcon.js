@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableHighlight } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const TouchableIcon = ({ name, onPress }) => (
   <TouchableHighlight onPress={onPress} underlayColor="transparent" activeOpacity={0.5}>
